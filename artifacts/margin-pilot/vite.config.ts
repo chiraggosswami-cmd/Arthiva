@@ -1,7 +1,20 @@
 import path from 'path';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+import { createTranslateMiddleware } from './src/server/translateMiddleware';
+
+function translateApiPlugin(): Plugin {
+  return {
+    name: 'translate-api-plugin',
+    configureServer(server) {
+      server.middlewares.use('/api/translate', createTranslateMiddleware());
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use('/api/translate', createTranslateMiddleware());
+    },
+  };
+}
 
 const port = Number(process.env.PORT || 3000);
 const basePath = process.env.BASE_PATH || '/';
@@ -11,6 +24,7 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
+    translateApiPlugin(),
   ],
   resolve: {
     alias: {

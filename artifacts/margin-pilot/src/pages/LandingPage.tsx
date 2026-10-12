@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { NaomiLogo } from '../components/NaomiLogo';
+import { useTranslation } from 'react-i18next';
+import { ArthivaLogo } from '../components/ArthivaLogo';
 import { SiteHeader } from '../components/SiteHeader';
 import { AuthPanel } from '../components/AuthPanel';
 import { useAuth } from '../state/AuthContext';
@@ -25,6 +26,7 @@ import {
 const inr = (n: number) => `₹${Math.round(n).toLocaleString('en-IN')}`;
 
 export function LandingPage() {
+  const { t } = useTranslation();
   const { user, openAuthModal, authModalOpen, authModalTab, closeAuthModal } = useAuth();
   const { orders } = useAppState();
   const [, setLocation] = useLocation();
@@ -44,15 +46,15 @@ export function LandingPage() {
             
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#eaf4ef] border border-[#cfdfd7] text-xs font-bold text-[#14533d] animate-in fade-in slide-in-from-bottom-2">
               <Sparkles size={14} className="text-[#1f8a5b]" />
-              <span>PROFIT-AWARE D2C DISPATCH & DELIVERY INTELLIGENCE</span>
+              <span>{t('landing.badge', 'PROFIT-AWARE D2C DISPATCH & DELIVERY INTELLIGENCE')}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-['Bricolage_Grotesque'] tracking-tight text-[#0e3b43] leading-[1.12]">
-              Stop shipping orders that kill your bottom line.
+              {t('landing.headline', 'Stop shipping orders that kill your bottom line.')}
             </h1>
 
             <p className="text-base sm:text-lg text-[#556e68] max-w-2xl mx-auto leading-relaxed">
-              Naomi scores every order before dispatch, calculates expected margin across journeys, rescues in-transit delivery exceptions (NDRs), and turns RTO losses into recovered profits.
+              {t('landing.subheadline', 'Arthiva scores every order before dispatch, calculates expected margin across journeys, rescues in-transit delivery exceptions (NDRs), and turns RTO losses into recovered profits.')}
             </p>
 
             {/* Hero CTAs */}
@@ -63,7 +65,7 @@ export function LandingPage() {
                   onClick={() => setLocation('/dashboard')}
                   className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#0e3b43] via-[#134954] to-[#185e6b] hover:from-[#134954] hover:via-[#195c68] hover:to-[#206f7e] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#0e3b43]/20 hover:shadow-xl hover:shadow-[#0e3b43]/25 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
-                  <span>Go to Workspace Dashboard</span>
+                  <span>{t('landing.openDashboard', 'Open Live Dashboard')}</span>
                   <ArrowRight size={17} />
                 </button>
               ) : (
@@ -73,7 +75,7 @@ export function LandingPage() {
                     onClick={() => openAuthModal('register', '/dashboard')}
                     className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#0e3b43] via-[#134954] to-[#185e6b] hover:from-[#134954] hover:via-[#195c68] hover:to-[#206f7e] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#0e3b43]/20 hover:shadow-xl hover:shadow-[#0e3b43]/25 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                   >
-                    <span>Create your account</span>
+                    <span>{t('landing.createAccount', 'Create your account')}</span>
                     <ArrowRight size={17} />
                   </button>
 
@@ -82,7 +84,7 @@ export function LandingPage() {
                     onClick={() => openAuthModal('signin', '/dashboard')}
                     className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-white via-[#fcfdfe] to-[#f6faf8] hover:from-[#edf6f2] hover:to-[#e3efe9] text-[#0e3b43] font-bold text-sm border border-[#d6e2de] hover:border-[#9bbcaf] shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center justify-center gap-1.5"
                   >
-                    <span>Already have an account? Sign in</span>
+                    <span>{t('landing.alreadyAccount', 'Already have an account? Sign in')}</span>
                   </button>
                 </>
               )}
@@ -117,17 +119,17 @@ export function LandingPage() {
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block" />
                   <span className="w-2.5 h-2.5 rounded-full bg-green-400 inline-block" />
                 </div>
-                <span className="text-xs font-bold text-white/80 ml-2">naomi · operations preview</span>
+                <span className="text-xs font-bold text-white/80 ml-2">arthiva · operations preview</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#f5a524] text-[#0e3b43]">
-                  80+ SEEDED DEMO ORDERS
+                  {t('landing.demoBadge', '80+ SEEDED DEMO ORDERS')}
                 </span>
                 <Link
                   href="/orders"
                   className="text-xs font-bold text-white/90 hover:text-white flex items-center gap-1 ml-2"
                 >
-                  <span>Explore manifest</span> <ArrowUpRight size={13} />
+                  <span>{t('landing.exploreManifest', 'Explore manifest')}</span> <ArrowUpRight size={13} />
                 </Link>
               </div>
             </div>
@@ -222,10 +224,10 @@ export function LandingPage() {
           
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold font-['Bricolage_Grotesque'] text-[#0e3b43]">
-              Engineered specifically for Indian D2C delivery economics
+              {t('landing.pillarsTitle', 'Engineered specifically for Indian D2C delivery economics')}
             </h2>
             <p className="text-sm text-[#5f7570] mt-2">
-              Most platforms only look at RTO risk percentage. Naomi computes pure expected margin in rupees to recommend the highest-yield action.
+              {t('landing.pillarsSubtitle', 'Most platforms only look at RTO risk percentage. Arthiva computes pure expected margin in rupees to recommend the highest-yield action.')}
             </p>
           </div>
 
@@ -237,10 +239,10 @@ export function LandingPage() {
                 <SlidersHorizontal size={20} />
               </div>
               <h3 className="text-lg font-bold font-['Bricolage_Grotesque'] text-[#0e3b43]">
-                Order Health & Journey Scoring
+                {t('landing.pillar1Title', 'Order Health & Journey Scoring')}
               </h3>
               <p className="text-xs text-[#556e68] leading-relaxed">
-                Evaluate Full COD, OTP confirmation, and Prepaid incentive journeys side-by-side using real courier and pincode history.
+                {t('landing.pillar1Desc', 'Evaluate Full COD, OTP confirmation, and Prepaid incentive journeys side-by-side using real courier and pincode history.')}
               </p>
               <Link href="/journeys" className="inline-flex items-center gap-1 text-xs font-bold text-[#1a625b] hover:underline pt-1">
                 <span>View journey rules</span> <ChevronRight size={13} />
@@ -253,10 +255,10 @@ export function LandingPage() {
                 <LifeBuoy size={20} />
               </div>
               <h3 className="text-lg font-bold font-['Bricolage_Grotesque'] text-[#0e3b43]">
-                Delivery Rescue (NDR Board)
+                {t('landing.pillar2Title', 'Delivery Rescue (NDR Board)')}
               </h3>
               <p className="text-xs text-[#556e68] leading-relaxed">
-                Address fake delivery attempts, customer unavailable flags, and incorrect addresses with automated WhatsApp interventions.
+                {t('landing.pillar2Desc', 'Address fake delivery attempts, customer unavailable flags, and incorrect addresses with automated WhatsApp interventions.')}
               </p>
               <Link href="/rescue" className="inline-flex items-center gap-1 text-xs font-bold text-[#1a625b] hover:underline pt-1">
                 <span>Explore NDR rescue</span> <ChevronRight size={13} />
@@ -269,10 +271,10 @@ export function LandingPage() {
                 <RotateCcw size={20} />
               </div>
               <h3 className="text-lg font-bold font-['Bricolage_Grotesque'] text-[#0e3b43]">
-                RTO Recovery & Write-off Engine
+                {t('landing.pillar3Title', 'RTO Recovery & Write-off Engine')}
               </h3>
               <p className="text-xs text-[#556e68] leading-relaxed">
-                Rank recovery actions for RTO-initiated orders: decide instantly whether to reattempt, reroute to local fulfillment, or restock.
+                {t('landing.pillar3Desc', 'Rank recovery actions for RTO-initiated orders: decide instantly whether to reattempt, reroute to local fulfillment, or restock.')}
               </p>
               <Link href="/recovery" className="inline-flex items-center gap-1 text-xs font-bold text-[#1a625b] hover:underline pt-1">
                 <span>Explore RTO recovery</span> <ChevronRight size={13} />
@@ -289,23 +291,23 @@ export function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <NaomiLogo size="md" theme="dark" accentDotColor="#f5a524" />
+              <ArthivaLogo size="md" theme="dark" accentDotColor="#f5a524" />
               <span className="text-[11px] text-white/50">· D2C Profit Operations Pilot</span>
             </div>
 
             <div className="flex flex-wrap items-center gap-6 text-xs text-white/70">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/orders" className="hover:text-white transition-colors">Orders</Link>
-              <Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link>
-              <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
+              <Link href="/" className="hover:text-white transition-colors">{t('nav.home', 'Home')}</Link>
+              <Link href="/orders" className="hover:text-white transition-colors">{t('nav.orders', 'Orders')}</Link>
+              <Link href="/pricing" className="hover:text-white transition-colors">{t('nav.pricing', 'Pricing')}</Link>
+              <Link href="/dashboard" className="hover:text-white transition-colors">{t('nav.dashboard', 'Dashboard')}</Link>
             </div>
           </div>
 
           <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-white/50">
             <p>
-              Naomi is a small-scale pilot project built for Indian D2C ecommerce brands. Local state persists seamlessly across sessions.
+              {t('landing.footerDisclaimer', 'Arthiva is a small-scale pilot project built for Indian D2C ecommerce brands. Local state persists seamlessly across sessions.')}
             </p>
-            <p>© {new Date().getFullYear()} Naomi Operations. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} Arthiva Operations. All rights reserved.</p>
           </div>
         </div>
       </footer>

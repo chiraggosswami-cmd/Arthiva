@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'wouter';
+import { useTranslation } from 'react-i18next';
 import { Activity, CircleHelp, Plus, ShoppingBag, LifeBuoy, RotateCcw, SlidersHorizontal, BrainCircuit, Database, PlayCircle, FlaskConical, Layers, ChevronDown, Check, Store, LogOut, LayoutDashboard } from 'lucide-react';
 import { CommandPalette } from './CommandPalette';
 import { LoadingScreen } from './LoadingScreen';
-import { NaomiLogo } from './NaomiLogo';
+import { ArthivaLogo } from './ArthivaLogo';
+import { LanguageSelector } from './LanguageSelector';
 import { useAppState } from '../state/AppState';
 import { useAuth } from '../state/AuthContext';
 import type { ReactNode } from 'react';
 
 export function Shell({ children }: { children: ReactNode }) {
   const [path] = useLocation();
+  const { t } = useTranslation();
   const { sellers, currentSeller, setCurrentSellerId } = useAppState();
   const { user, logout } = useAuth();
   const [sellerOpen, setSellerOpen] = useState(false);
@@ -33,10 +36,10 @@ export function Shell({ children }: { children: ReactNode }) {
       <CommandPalette />
       
       <aside className="sidebar" style={{ backgroundColor: currentSeller.accentColor.primary, transition: 'background-color 0.3s ease', overflowY: 'auto', overflowX: 'hidden' }}>
-        {/* Brand with naomi lowercase bold wordmark */}
+        {/* Brand with arthiva calligraphic wordmark */}
         <Link href="/dashboard" className="brand flex items-center justify-between group shrink-0" style={{ padding: '2px 4px', marginBottom: '2px' }}>
           <div className="flex items-center gap-2">
-            <NaomiLogo size="md" theme="dark" accentDotColor={currentSeller.accentColor.highlight} />
+            <ArthivaLogo size="md" theme="dark" accentDotColor={currentSeller.accentColor.highlight} />
             <span className="text-[10px] uppercase font-bold tracking-[0.2em] px-1.5 py-0.5 rounded text-white/80 bg-white/10">
               OPS
             </span>
@@ -99,39 +102,39 @@ export function Shell({ children }: { children: ReactNode }) {
           )}
         </div>
 
-        <div className="nav-label" style={{ padding: '0 6px 3px', fontSize: '9.5px' }}>WORKSPACE</div>
+        <div className="nav-label" style={{ padding: '0 6px 3px', fontSize: '9.5px' }}>{t('common.activeWorkspace', 'WORKSPACE')}</div>
         <nav className="nav-links" style={{ gap: '2px' }}>
           <Link href="/dashboard" className={`nav-link ${path === '/dashboard' || path === '/' ? 'active' : ''}`}>
-            <Activity size={16} /> Command centre
+            <Activity size={16} /> {t('nav.commandCentre', 'Command centre')}
           </Link>
           <Link href="/orders" className={`nav-link ${path.startsWith('/orders') ? 'active' : ''}`}>
-            <ShoppingBag size={16} /> Orders <span className="nav-count">80+</span>
+            <ShoppingBag size={16} /> {t('nav.orders', 'Orders')} <span className="nav-count">80+</span>
           </Link>
           <Link href="/rescue" className={`nav-link ${path === '/rescue' ? 'active' : ''}`}>
-            <LifeBuoy size={16} /> Delivery rescue
+            <LifeBuoy size={16} /> {t('nav.rescue', 'Delivery rescue')}
           </Link>
           <Link href="/recovery" className={`nav-link ${path === '/recovery' ? 'active' : ''}`}>
-            <RotateCcw size={16} /> RTO recovery
+            <RotateCcw size={16} /> {t('nav.recovery', 'RTO recovery')}
           </Link>
           <Link href="/listings" className={`nav-link ${path.startsWith('/listings') ? 'active' : ''}`}>
-            <Layers size={16} /> Listing intelligence
+            <Layers size={16} /> {t('nav.listings', 'Listing intelligence')}
           </Link>
           <Link href="/journeys" className={`nav-link ${path === '/journeys' ? 'active' : ''}`}>
-            <SlidersHorizontal size={16} /> Journey rules
+            <SlidersHorizontal size={16} /> {t('nav.journeys', 'Journey rules')}
           </Link>
 
           <div className="nav-label" style={{ marginTop: '8px', padding: '0 6px 3px', fontSize: '9.5px' }}>SYSTEM</div>
           <Link href="/intelligence" className={`nav-link ${path === '/intelligence' ? 'active' : ''}`}>
-            <BrainCircuit size={16} /> Intelligence
+            <BrainCircuit size={16} /> {t('nav.intelligence', 'Intelligence')}
           </Link>
           <Link href="/integrations" className={`nav-link ${path === '/integrations' ? 'active' : ''}`} style={{ backgroundColor: '#551818' }}>
-            <Database size={16} /> Integrations
+            <Database size={16} /> {t('nav.integrations', 'Integrations')}
           </Link>
           <Link href="/lab" className={`nav-link ${path === '/lab' ? 'active' : ''}`}>
-            <FlaskConical size={16} /> Simulation Lab
+            <FlaskConical size={16} /> {t('nav.lab', 'Simulation Lab')}
           </Link>
           <Link href="/demo" className={`nav-link ${path === '/demo' ? 'active' : ''}`}>
-            <PlayCircle size={16} /> Demo Mode
+            <PlayCircle size={16} /> {t('nav.demo', 'Demo Mode')}
           </Link>
         </nav>
 
@@ -148,7 +151,7 @@ export function Shell({ children }: { children: ReactNode }) {
       <main className="main">
         <header className="topbar">
           <div className="crumb">
-            <span className="text-xs font-bold text-[#627772]">naomi</span>
+            <span className="text-xs font-bold text-[#627772]">arthiva</span>
             <span>/</span>
             <b className="text-xs">
               {path === '/checkout'
@@ -180,6 +183,9 @@ export function Shell({ children }: { children: ReactNode }) {
           </div>
 
           <div className="top-actions flex items-center gap-3">
+            {/* Language Selector */}
+            <LanguageSelector variant="compact" />
+
             {/* Seller Quick Select pill in header */}
             <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#e1e8e4] bg-white text-xs font-semibold text-[#0e3b43]">
               <span
@@ -198,7 +204,7 @@ export function Shell({ children }: { children: ReactNode }) {
               className="button button-primary top-new text-xs font-bold"
               style={{ backgroundColor: currentSeller.accentColor.primary }}
             >
-              <Plus size={16} /> New order
+              <Plus size={16} /> {t('common.newOrder', 'New order')}
             </Link>
 
             {/* Circular user avatar button with account menu */}
@@ -226,9 +232,9 @@ export function Shell({ children }: { children: ReactNode }) {
                 >
                   <div className="px-4 py-2 border-b border-[#edf2f0]">
                     <p className="text-xs font-bold text-[#0e3b43] truncate">{user?.name || currentSeller.name}</p>
-                    <p className="text-[11px] text-[#718580] truncate">{user?.email || 'operator@naomi.local'}</p>
+                    <p className="text-[11px] text-[#718580] truncate">{user?.email || 'operator@arthiva.local'}</p>
                     <span className="inline-block mt-1 text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-[#eaf4ef] text-[#1a625b]">
-                      Active Workspace
+                      {t('common.activeWorkspace', 'Active Workspace')}
                     </span>
                   </div>
 
@@ -237,7 +243,7 @@ export function Shell({ children }: { children: ReactNode }) {
                     className="w-full text-left px-4 py-2.5 text-xs font-semibold text-[#1e3c38] hover:bg-[#f4f8f6] flex items-center gap-2.5 transition-colors"
                   >
                     <LayoutDashboard size={15} className="text-[#1a625b]" />
-                    <span>Dashboard</span>
+                    <span>{t('common.dashboard', 'Dashboard')}</span>
                   </Link>
 
                   <Link
@@ -245,7 +251,7 @@ export function Shell({ children }: { children: ReactNode }) {
                     className="w-full text-left px-4 py-2 text-xs font-semibold text-[#1e3c38] hover:bg-[#f4f8f6] flex items-center gap-2.5 transition-colors"
                   >
                     <Store size={15} className="text-[#1a625b]" />
-                    <span>Landing Page</span>
+                    <span>{t('common.home', 'Landing Page')}</span>
                   </Link>
 
                   <div className="border-t border-[#edf2f0] my-1" />
@@ -256,7 +262,7 @@ export function Shell({ children }: { children: ReactNode }) {
                     className="w-full text-left px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
                     <LogOut size={15} />
-                    <span>Sign out</span>
+                    <span>{t('common.signOut', 'Sign out')}</span>
                   </button>
                 </div>
               )}

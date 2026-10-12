@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../state/AuthContext';
-import { NaomiLogo } from './NaomiLogo';
+import { ArthivaLogo } from './ArthivaLogo';
 import { X, Lock, Mail, User, Store, ArrowRight, ShieldCheck, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { useLocation } from 'wouter';
 
@@ -96,14 +96,14 @@ export function AuthPanel({
         )}
 
         <div className="flex items-center gap-2 mb-1.5">
-          <NaomiLogo size="sm" theme="dark" accentDotColor="#f5a524" />
+          <ArthivaLogo size="sm" theme="dark" accentDotColor="#f5a524" />
           <span className="text-[9.5px] font-bold tracking-widest text-[#f5a524] uppercase px-1.5 py-0.5 rounded bg-white/10 border border-white/10">
             SECURE ACCESS
           </span>
         </div>
 
         <h2 className="text-lg sm:text-xl font-bold font-['Bricolage_Grotesque'] text-white leading-tight">
-          {tab === 'signin' ? 'Sign in to Naomi Operations' : 'Start your Naomi pilot'}
+          {tab === 'signin' ? 'Sign in to Arthiva Operations' : 'Start your Arthiva pilot'}
         </h2>
         <p className="text-[11px] sm:text-xs text-white/80 mt-1 line-clamp-1 sm:line-clamp-none">
           {tab === 'signin'

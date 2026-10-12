@@ -170,7 +170,7 @@ export default function DemoPage() {
                   {step === 2 && (
                     <div className="space-y-3">
                       <p className="text-sm text-[#48635c] leading-relaxed">
-                        Rather than guessing, naomi calculates Expected Value (EV) across all predefined order journeys taking into account margin, freight loss, and retention.
+                        Rather than guessing, Arthiva calculates Expected Value (EV) across all predefined order journeys taking into account margin, freight loss, and retention.
                       </p>
                       <div className="p-4 bg-[#f4f8f6] rounded-xl border border-[#d6ecde] space-y-2">
                         <div className="text-xs font-bold text-[#1a5542] flex items-center justify-between">
@@ -210,7 +210,7 @@ export default function DemoPage() {
                           <AlertTriangle size={15} /> NDR Raised in Real Time
                         </div>
                         <p className="text-xs text-[#9a6e19]">
-                          naomi catches the webhook within 60 seconds and queues an instant Delivery Rescue flow.
+                          Arthiva catches the webhook within 60 seconds and queues an instant Delivery Rescue flow.
                         </p>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ export default function DemoPage() {
                   {step === 5 && (
                     <div className="space-y-3">
                       <p className="text-sm text-[#48635c] leading-relaxed">
-                        naomi dispatches a personalized WhatsApp notification with one-tap reschedule options.
+                        Arthiva dispatches a personalized WhatsApp notification with one-tap reschedule options.
                       </p>
                       <div className="p-4 bg-[#f5f8f6] rounded-xl border border-[#e2eae6] space-y-2">
                         <div className="flex items-center gap-2 text-xs font-bold text-[#1f7354]">

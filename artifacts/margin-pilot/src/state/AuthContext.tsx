@@ -18,6 +18,7 @@ export interface User {
   storeName?: string;
   avatarUrl?: string;
   storeId?: string;
+  preferredLanguage?: string;
 }
 
 interface AuthContextType {
@@ -38,8 +39,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-const AUTH_USER_KEY = 'naomi-auth-user';
-const REQUESTED_ROUTE_KEY = 'naomi-requested-route';
+const AUTH_USER_KEY = 'arthiva-auth-user';
+const REQUESTED_ROUTE_KEY = 'arthiva-requested-route';
 
 async function syncUserProfile(fbUser: FirebaseUser, storeNameHint?: string): Promise<User> {
   const userRef = doc(db, 'users', fbUser.uid);
@@ -51,9 +52,10 @@ async function syncUserProfile(fbUser: FirebaseUser, storeNameHint?: string): Pr
         id: fbUser.uid,
         email: fbUser.email || '',
         name: data.displayName || fbUser.displayName || 'Operations Pilot',
-        storeName: data.storeName || 'Naomi Store',
+        storeName: data.storeName || 'Arthiva Store',
         avatarUrl: fbUser.photoURL || undefined,
         storeId: `store_${fbUser.uid.slice(0, 8)}`,
+        preferredLanguage: data.preferredLanguage,
       };
     } else {
       const displayName = fbUser.displayName || fbUser.email?.split('@')[0] || 'Operations Pilot';

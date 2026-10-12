@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'wouter';
-import { NaomiLogo } from './NaomiLogo';
+import { useTranslation } from 'react-i18next';
+import { ArthivaLogo } from './ArthivaLogo';
+import { LanguageSelector } from './LanguageSelector';
 import { useAuth } from '../state/AuthContext';
 import {
   Menu,
@@ -16,6 +18,7 @@ import {
 
 export function SiteHeader() {
   const [location] = useLocation();
+  const { t } = useTranslation();
   const { user, logout, openAuthModal } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
@@ -29,7 +32,7 @@ export function SiteHeader() {
     if (email) {
       return email.slice(0, 2).toUpperCase();
     }
-    return 'NP';
+    return 'AP';
   };
 
   return (
@@ -39,9 +42,9 @@ export function SiteHeader() {
         {/* Left: Brand Logo */}
         <div className="flex items-center gap-8">
           <Link href="/" className="flex items-center gap-2 select-none group">
-            <NaomiLogo size="md" theme="light" accentDotColor="#f5a524" />
+            <ArthivaLogo size="md" theme="light" accentDotColor="#f5a524" />
             <span className="hidden sm:inline-block text-[10px] font-bold tracking-widest text-[#0e3b43] uppercase px-1.5 py-0.5 rounded bg-[#eaf4ef]">
-              OPERATIONS
+              {t('common.operations', 'OPERATIONS')}
             </span>
           </Link>
 
@@ -54,7 +57,7 @@ export function SiteHeader() {
               }`}
             >
               <Home size={15} />
-              <span>Home</span>
+              <span>{t('nav.home', 'Home')}</span>
             </Link>
 
             <Link
@@ -64,7 +67,7 @@ export function SiteHeader() {
               }`}
             >
               <ShoppingBag size={15} />
-              <span>Orders</span>
+              <span>{t('nav.orders', 'Orders')}</span>
             </Link>
 
             <Link
@@ -74,13 +77,16 @@ export function SiteHeader() {
               }`}
             >
               <Tag size={15} />
-              <span>Pricing</span>
+              <span>{t('nav.pricing', 'Pricing')}</span>
             </Link>
           </nav>
         </div>
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-3">
+          {/* Language Selector in Navigation Bar */}
+          <LanguageSelector variant="header" />
+
           {user ? (
             /* Signed In User Menu */
             <div className="relative">
@@ -124,7 +130,7 @@ export function SiteHeader() {
                     className="w-full text-left px-4 py-2.5 text-xs font-semibold text-[#1e3c38] hover:bg-[#f4f8f6] flex items-center gap-2.5 transition-colors"
                   >
                     <LayoutDashboard size={15} className="text-[#1a625b]" />
-                    <span>Workspace Dashboard</span>
+                    <span>{t('common.dashboard', 'Workspace Dashboard')}</span>
                   </Link>
 
                   <Link
@@ -132,7 +138,7 @@ export function SiteHeader() {
                     className="w-full text-left px-4 py-2 text-xs font-semibold text-[#1e3c38] hover:bg-[#f4f8f6] flex items-center gap-2.5 transition-colors"
                   >
                     <ShoppingBag size={15} className="text-[#1a625b]" />
-                    <span>Live Order Dispatch</span>
+                    <span>{t('nav.orders', 'Live Order Dispatch')}</span>
                   </Link>
 
                   <div className="border-t border-[#edf2f0] my-1" />
@@ -143,7 +149,7 @@ export function SiteHeader() {
                     className="w-full text-left px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 flex items-center gap-2.5 transition-colors cursor-pointer"
                   >
                     <LogOut size={15} />
-                    <span>Sign out</span>
+                    <span>{t('common.signOut', 'Sign out')}</span>
                   </button>
                 </div>
               )}
@@ -156,7 +162,7 @@ export function SiteHeader() {
                 onClick={() => openAuthModal('signin')}
                 className="px-4 py-2 rounded-xl text-xs font-bold text-[#0e3b43] bg-gradient-to-r from-transparent to-transparent hover:from-[#edf5f1] hover:to-[#e3efe9] border border-transparent hover:border-[#cfdfd7] shadow-2xs hover:shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
               >
-                Sign in
+                {t('common.signIn', 'Sign in')}
               </button>
 
               <button
@@ -164,7 +170,7 @@ export function SiteHeader() {
                 onClick={() => openAuthModal('register')}
                 className="px-4 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#0e3b43] via-[#134954] to-[#185e6b] hover:from-[#134954] hover:via-[#195c68] hover:to-[#206f7e] text-white shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer flex items-center gap-1.5"
               >
-                <span>Register</span>
+                <span>{t('common.register', 'Register')}</span>
               </button>
             </div>
           )}
@@ -192,6 +198,9 @@ export function SiteHeader() {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-[#e1e8e4] bg-white px-4 pt-3 pb-6 space-y-2 animate-in slide-in-from-top-2">
+          {/* Mobile Language Selector */}
+          <LanguageSelector variant="mobile" />
+
           <Link
             href="/"
             onClick={() => setMobileMenuOpen(false)}
@@ -199,7 +208,7 @@ export function SiteHeader() {
               location === '/' ? 'bg-[#edf4f0] text-[#0e3b43]' : 'text-[#4b5f5b]'
             }`}
           >
-            Home
+            {t('nav.home', 'Home')}
           </Link>
           <Link
             href="/orders"
@@ -208,7 +217,7 @@ export function SiteHeader() {
               location.startsWith('/orders') ? 'bg-[#edf4f0] text-[#0e3b43]' : 'text-[#4b5f5b]'
             }`}
           >
-            Orders
+            {t('nav.orders', 'Orders')}
           </Link>
           <Link
             href="/pricing"
@@ -217,7 +226,7 @@ export function SiteHeader() {
               location === '/pricing' ? 'bg-[#edf4f0] text-[#0e3b43]' : 'text-[#4b5f5b]'
             }`}
           >
-            Pricing
+            {t('nav.pricing', 'Pricing')}
           </Link>
 
           <div className="pt-3 border-t border-[#edf2f0]">
@@ -232,14 +241,14 @@ export function SiteHeader() {
                   onClick={() => setMobileMenuOpen(false)}
                   className="block px-3 py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#0e3b43] via-[#134954] to-[#185e6b] hover:from-[#134954] hover:to-[#206f7e] text-white text-center shadow-xs transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
                 >
-                  Go to Dashboard
+                  {t('common.dashboard', 'Go to Dashboard')}
                 </Link>
                 <button
                   type="button"
                   onClick={() => { logout(); setMobileMenuOpen(false); }}
                   className="w-full px-3 py-2 rounded-xl text-xs font-bold text-red-600 bg-gradient-to-r from-red-50 to-red-100/60 hover:from-red-100 hover:to-red-200/70 border border-red-200/50 text-center transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
-                  Sign out
+                  {t('common.signOut', 'Sign out')}
                 </button>
               </div>
             ) : (
@@ -249,14 +258,14 @@ export function SiteHeader() {
                   onClick={() => { openAuthModal('signin'); setMobileMenuOpen(false); }}
                   className="w-full py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-white to-[#f8faf9] hover:from-[#edf5f1] hover:to-[#e4efe9] border border-[#d6e2de] hover:border-[#9bbcaf] text-[#0e3b43] text-center shadow-2xs transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
-                  Sign in
+                  {t('common.signIn', 'Sign in')}
                 </button>
                 <button
                   type="button"
                   onClick={() => { openAuthModal('register'); setMobileMenuOpen(false); }}
                   className="w-full py-2 rounded-xl text-xs font-bold bg-gradient-to-r from-[#0e3b43] via-[#134954] to-[#185e6b] hover:from-[#134954] hover:via-[#195c68] hover:to-[#206f7e] text-white text-center shadow-sm hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
-                  Register
+                  {t('common.register', 'Register')}
                 </button>
               </div>
             )}

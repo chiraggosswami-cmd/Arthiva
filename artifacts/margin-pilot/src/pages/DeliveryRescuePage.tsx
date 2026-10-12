@@ -6,6 +6,7 @@ import { recommendNdrRescue, type NdrReason } from '../engine/recovery';
 import { useAppState } from '../state/AppState';
 import { motion } from 'framer-motion';
 import { useToast } from '@/hooks/use-toast';
+import { DynamicVernacularTranslator } from '../components/DynamicVernacularTranslator';
 
 const reasons: NdrReason[] = ['Customer unreachable', 'Address incorrect', 'Refused / low intent', 'Rescheduled request', 'Delayed'];
 const stages = ['In transit', 'Delayed', 'NDR raised', 'Rescue sent', 'Delivered', 'RTO'];
@@ -28,6 +29,7 @@ export default function DeliveryRescuePage() {
   const [channel, setChannel] = useState<'WhatsApp' | 'SMS'>('WhatsApp');
   const { toast } = useToast();
   const [notice, setNotice] = useState('');
+  const [customRescueMessage, setCustomRescueMessage] = useState<Record<string, string>>({});
   const grouped = useMemo(() => {
     const result: Record<string, Order[]> = Object.fromEntries(stages.map(stage => [stage, []]));
     orders.forEach(order => result[orderStage(order)].push(order));
@@ -45,11 +47,12 @@ export default function DeliveryRescuePage() {
 
   const runRescue = () => {
     if (!selected || !recommendation) return;
+    const activeMsg = customRescueMessage[selected.id] || recommendation.message;
     updateOrder(selected.id, {
       status: 'Rescue sent',
       ndrReason: reason,
       rescueAction: recommendation.action,
-      rescueMessage: recommendation.message,
+      rescueMessage: activeMsg,
     }, `Rescue sent · ${recommendation.action}`);
     setNotice(`Rescue recorded for ${selected.id}.`);
     toast({
@@ -276,9 +279,30 @@ export default function DeliveryRescuePage() {
                 <span className="text-[10px] font-bold tracking-wider text-[#798a84] block mb-1">
                   {channel === 'WhatsApp' ? 'WHATSAPP' : 'SMS'} · TO {customer?.phone || selected.customerPhone || 'CUSTOMER'}
                 </span>
-                <p className="text-xs text-[#3d534c] leading-relaxed whitespace-pre-wrap">{recommendation.message}</p>
+                <p className="text-xs text-[#3d534c] leading-relaxed whitespace-pre-wrap">
+                  {customRescueMessage[selected.id] || recommendation.message}
+                </p>
+                {customRescueMessage[selected.id] && (
+                  <span className="inline-block mt-2 text-[10px] bg-[#d5ede1] text-[#14533d] px-2 py-0.5 rounded font-bold">
+                    Vernacular translated message active
+                  </span>
+                )}
               </div>
             </div>
+
+            {/* Dynamic Vernacular Translation Assistant */}
+            <DynamicVernacularTranslator
+              key={selected.id}
+              initialText={recommendation.message}
+              context={`Customer delivery exception WhatsApp rescue communication for order ${selected.id} (Reason: ${reason})`}
+              onApplyTranslation={(txt) => {
+                setCustomRescueMessage(prev => ({ ...prev, [selected.id]: txt }));
+                toast({
+                  title: "Vernacular Message Applied",
+                  description: `Updated rescue draft for order ${selected.id}.`,
+                });
+              }}
+            />
 
             <button
               type="button"

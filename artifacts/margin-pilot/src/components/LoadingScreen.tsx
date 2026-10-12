@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NaomiLogo } from './NaomiLogo';
+import { ArthivaLogo } from './ArthivaLogo';
 
 export function LoadingScreen() {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (!sessionStorage.getItem('naomi-loaded')) {
+    if (!sessionStorage.getItem('arthiva-loaded') && !sessionStorage.getItem('naomi-loaded')) {
       setShow(true);
-      sessionStorage.setItem('naomi-loaded', 'true');
+      sessionStorage.setItem('arthiva-loaded', 'true');
       const timer = setTimeout(() => setShow(false), 900);
       return () => clearTimeout(timer);
     }
@@ -44,7 +44,7 @@ export function LoadingScreen() {
               transition={{ delay: 0.3, duration: 0.4 }}
               className="flex flex-col items-center gap-1.5"
             >
-              <NaomiLogo size="lg" theme="light" />
+              <ArthivaLogo size="lg" theme="light" />
               <span className="text-[11px] font-bold tracking-widest text-[#6f847f] uppercase">
                 PROFIT & DELIVERY INTELLIGENCE
               </span>

@@ -84,7 +84,7 @@ export default function LabPage() {
             Simulation lab
           </h1>
           <p className="text-sm text-[#70817d] mt-1">
-            Model expected outcomes across thousands of simulated orders to benchmark naomi against unmanaged baseline COD.
+            Model expected outcomes across thousands of simulated orders to benchmark Arthiva against unmanaged baseline COD.
           </p>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function LabPage() {
         {/* Tile 2: Managed RTO % */}
         <div className="bg-white p-5 rounded-[20px] border border-[#e1e8e4] shadow-[0_2px_10px_rgba(14,59,67,0.04)]">
           <div className="flex items-center justify-between text-xs font-semibold text-[#71827d]">
-            <span>naomi Managed RTO %</span>
+            <span>Arthiva Managed RTO %</span>
             <span className="w-2.5 h-2.5 rounded-full bg-[#1f8a5b]" />
           </div>
           <b className="block text-3xl font-bold font-['Bricolage_Grotesque'] text-[#1f8a5b] mt-2">
@@ -263,13 +263,13 @@ export default function LabPage() {
               </div>
             </div>
 
-            {/* Card B: naomi Engine */}
+            {/* Card B: Arthiva Engine */}
             <div className="bg-white p-6 rounded-[20px] border-2 border-[#1f8a5b] shadow-[0_4px_14px_rgba(31,138,91,0.08)] space-y-3">
               <div className="pb-2 border-b border-[#eaf5ef] flex items-center justify-between">
                 <div>
                   <span className="eyebrow text-[#1f8a5b] font-bold">OPTIMIZED ENGINE</span>
                   <h3 className="text-base font-bold font-['Bricolage_Grotesque'] text-[#0e3b43]">
-                    naomi Journeys
+                    Arthiva Journeys
                   </h3>
                 </div>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#eaf5ef] text-[#1c7851]">

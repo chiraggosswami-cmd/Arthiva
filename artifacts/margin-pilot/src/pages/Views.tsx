@@ -828,9 +828,9 @@ export function Checkout() {
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    let next = Number(localStorage.getItem('naomi-next-id') || 1043);
+    let next = Number(localStorage.getItem('arthiva-next-id') || localStorage.getItem('naomi-next-id') || 1043);
     while (orders.some(o => o.id === `MP-${String(next).padStart(4, '0')}`)) next++;
-    localStorage.setItem('naomi-next-id', String(next + 1));
+    localStorage.setItem('arthiva-next-id', String(next + 1));
     const order = {
       ...draft,
       id: `MP-${String(next).padStart(4, '0')}`,
@@ -839,7 +839,7 @@ export function Checkout() {
       customerPhone: phone,
       journey: preview.best.name,
       score: preview.score,
-      timeline: [{ label: `Order created via naomi Storefront · ${campaign}`, at: 'Just now' }]
+      timeline: [{ label: `Order created via Arthiva Storefront · ${campaign}`, at: 'Just now' }]
     };
     addOrder(order);
     setLocation(`/orders/${order.id}`);
@@ -928,7 +928,7 @@ export function Checkout() {
               <span className="w-6 h-6 rounded-lg bg-[#eaf5ef] text-[#1f8a5b] font-bold text-xs flex items-center justify-center">03</span>
               <div>
                 <h2 className="text-base font-bold text-[#0e3b43] font-['Bricolage_Grotesque']">Delivery Destination</h2>
-                <p className="text-xs text-[#70817d]">Address completeness is scored by naomi risk intelligence.</p>
+                <p className="text-xs text-[#70817d]">Address completeness is scored by Arthiva risk intelligence.</p>
               </div>
             </div>
 

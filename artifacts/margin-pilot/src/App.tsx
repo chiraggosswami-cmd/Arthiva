@@ -19,6 +19,8 @@ import DemoPage from '@/pages/DemoPage';
 import { AppState } from '@/state/AppState';
 import { AuthProvider, useAuth } from '@/state/AuthContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { useTranslation } from 'react-i18next';
+import { STORAGE_KEY, SUPPORTED_LANGUAGES } from './i18n/config';
 import '@/pages/operations.css';
 import {
   Route,
@@ -97,6 +99,32 @@ function Router() {
   );
 }
 
+function LanguageSync() {
+  const { i18n } = useTranslation();
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = i18n.language || 'en';
+      const current = SUPPORTED_LANGUAGES.find(l => l.code === i18n.language);
+      document.documentElement.dir = current?.dir || 'ltr';
+    }
+  }, [i18n.language]);
+
+  useEffect(() => {
+    if (user?.preferredLanguage && user.preferredLanguage !== i18n.language) {
+      i18n.changeLanguage(user.preferredLanguage);
+      try {
+        localStorage.setItem(STORAGE_KEY, user.preferredLanguage);
+      } catch {
+        // ignore
+      }
+    }
+  }, [user?.preferredLanguage, i18n]);
+
+  return null;
+}
+
 function RoutedErrorBoundary({ children }: { children: ReactNode }) {
   const [location] = useLocation();
   return <ErrorBoundary resetKey={location}>{children}</ErrorBoundary>;
@@ -107,6 +135,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <AuthProvider>
+          <LanguageSync />
           <AppState>
             <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
               <Router />

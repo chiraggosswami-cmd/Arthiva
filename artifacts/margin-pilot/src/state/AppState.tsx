@@ -22,7 +22,7 @@ const Ctx = createContext<State | null>(null);
 export function AppState({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
-      const saved = localStorage.getItem('margin-pilot-state') || localStorage.getItem('naomi-state');
+      const saved = localStorage.getItem('arthiva-state') || localStorage.getItem('margin-pilot-state') || localStorage.getItem('naomi-state');
       return saved ? JSON.parse(saved) : seedOrders;
     } catch {
       return seedOrders;
@@ -31,7 +31,7 @@ export function AppState({ children }: { children: ReactNode }) {
 
   const [currentSellerId, setCurrentSellerIdState] = useState<string>(() => {
     try {
-      return localStorage.getItem('naomi-current-seller') || DEFAULT_SELLER.id;
+      return localStorage.getItem('arthiva-current-seller') || localStorage.getItem('naomi-current-seller') || DEFAULT_SELLER.id;
     } catch {
       return DEFAULT_SELLER.id;
     }
@@ -39,7 +39,7 @@ export function AppState({ children }: { children: ReactNode }) {
 
   const [engineConfig, setEngineConfig] = useState<EngineConfig>(() => {
     try {
-      const saved = localStorage.getItem('margin-pilot-rules') || localStorage.getItem('naomi-rules');
+      const saved = localStorage.getItem('arthiva-rules') || localStorage.getItem('margin-pilot-rules') || localStorage.getItem('naomi-rules');
       return saved ? JSON.parse(saved) : DEFAULT_ENGINE_CONFIG;
     } catch {
       return DEFAULT_ENGINE_CONFIG;
@@ -52,6 +52,7 @@ export function AppState({ children }: { children: ReactNode }) {
 
   const setCurrentSellerId = (id: string) => {
     setCurrentSellerIdState(id);
+    localStorage.setItem('arthiva-current-seller', id);
     localStorage.setItem('naomi-current-seller', id);
   };
 
@@ -67,16 +68,18 @@ export function AppState({ children }: { children: ReactNode }) {
   }, [currentSeller]);
 
   useEffect(() => {
-    if (!localStorage.getItem('naomi-state')) {
-      localStorage.setItem('naomi-state', JSON.stringify(orders));
+    if (!localStorage.getItem('arthiva-state')) {
+      localStorage.setItem('arthiva-state', JSON.stringify(orders));
     }
   }, []);
 
   useEffect(() => {
+    localStorage.setItem('arthiva-state', JSON.stringify(orders));
     localStorage.setItem('naomi-state', JSON.stringify(orders));
   }, [orders]);
 
   useEffect(() => {
+    localStorage.setItem('arthiva-rules', JSON.stringify(engineConfig));
     localStorage.setItem('naomi-rules', JSON.stringify(engineConfig));
   }, [engineConfig]);
 

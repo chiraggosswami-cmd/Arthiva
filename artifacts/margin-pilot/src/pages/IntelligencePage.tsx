@@ -260,7 +260,7 @@ export default function IntelligencePage() {
           </div>
 
           <p className="text-xs text-[#70817d]">
-            Comparing standard baseline return rate vs. naomi engine-managed order flow.
+            Comparing standard baseline return rate vs. Arthiva engine-managed order flow.
           </p>
 
           <div className="h-48 w-full bg-[#fbfdfc] p-2 rounded-xl border border-[#edf2ef]">
@@ -271,7 +271,7 @@ export default function IntelligencePage() {
                 <YAxis tick={{ fontSize: 10, fill: '#82908e' }} tickLine={false} axisLine={false} unit="%" />
                 <Tooltip />
                 <Area type="monotone" dataKey="baseline" stroke="#f5a524" fill="#fdf8ed" strokeDasharray="4 4" name="Baseline COD" />
-                <Area type="monotone" dataKey="rto" stroke="#0e3b43" fill="#eaf5ef" name="naomi Engine" />
+                <Area type="monotone" dataKey="rto" stroke="#0e3b43" fill="#eaf5ef" name="Arthiva Engine" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
